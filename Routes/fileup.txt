@@ -1,0 +1,25 @@
+// simple file upload on cludinary
+const express = require("express");
+const router = express.Router();
+const cloudinary = require('cloudinary').v2
+
+cloudinary.config({ 
+    cloud_name: 'food-recipes', 
+    api_key: '561823732378912', 
+    api_secret: 'te-NVe3uoJdQwIbjWVrOKV6H21Q' 
+  });
+
+router.post('/',(req,res)=>{
+    const file = req.files.image
+    cloudinary.uploader.upload(file.tempFilePath,(error,result)=>{
+        let recipe = {
+            name:req.body.name,
+            des:req.body.des,
+            img:result.url
+        }
+        res.status(200).send(recipe)
+        console.log(recipe,"result".blue);
+    })
+})
+
+module.exports = router
