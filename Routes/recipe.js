@@ -26,6 +26,7 @@ router.post("/", async (req, res) => {
       video: req.body.video,
       socialMedia: req.body.socialMedia,
       chefName: req.body.chefName,
+      chefID: req.body.chefID,
       date: new Date(Date.now()).toISOString(),
       preserving: req.body.preserving,
       preservingMeasure: req.body.preservingMeasure,

@@ -11,7 +11,9 @@ router.post("/signup", async (req, res) => {
     const ExistUser = await Users.findOne({ email: req.body.email });
 
     if (ExistUser) {
-      return res.status(422).json({ error:'true' ,Message: "Email alredy exist" });
+      return res
+        .status(422)
+        .json({ error: "true", Message: "Email alredy exist" });
     } else {
       // Image upload in cloudinary
       // const result = await cloudinary.uploader.upload(file.tempFilePath);
@@ -35,9 +37,11 @@ router.post("/signup", async (req, res) => {
 
       // Data save in DB
       await userImageData.save();
-      res
-        .status(201)
-        .json({error:'false', Message: "User registered successfuly", Data: userImageData });
+      res.status(201).json({
+        error: "false",
+        Message: "User registered successfuly",
+        Data: userImageData,
+      });
     }
   } catch (error) {
     res.status(400).send(error);
@@ -62,7 +66,11 @@ router.post("/signin", async (req, res) => {
         // Generate JWT token
         const token = await existUser.generateSigninToken();
 
-        res.json({ Message: "User Signin Successfully", Token: token, UserData:existUser });
+        res.json({
+          Message: "User Signin Successfully",
+          Token: token,
+          UserData: existUser,
+        });
       } else {
         res.status(400).json({ Error: "Invalid Credientials" });
       }
@@ -72,6 +80,29 @@ router.post("/signin", async (req, res) => {
   } catch (error) {
     res.status(400).send(error);
     console.log(error.red, "ERROR".yellow);
+  }
+});
+
+// Update User Route
+router.put("/addRecipeId", async (req, res) => {
+  const existUser = await Users.findOne({ _id: req.body.userId });
+  if (existUser) {
+    let Data = {
+      $set: {
+        recipeIds: [...existUser.recipeIds, { recipeId: req.body.recipeId }],
+      },
+    };
+
+    const options = { upsert: true };
+
+    const result = await Users.findOneAndUpdate(existUser?._id, Data, options);
+
+    res.status(200).json({
+      loading: false,
+      Message: result,
+    });
+  } else {
+    res.status(400).json({ Error: "User Not exiest!!" });
   }
 });
 

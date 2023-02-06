@@ -59,10 +59,6 @@ const UserSchema = new mongoose.Schema({
       recipeId: {
         type: String,
       },
-      date: {
-        type: Date,
-        default: Date.now,
-      },
     },
   ],
   tokens: [
