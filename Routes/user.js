@@ -95,11 +95,11 @@ router.put("/addRecipeId", async (req, res) => {
 
     const options = { upsert: true };
 
-    const result = await Users.findOneAndUpdate(existUser?._id, Data, options);
+    await Users.findOneAndUpdate(existUser?._id, Data, options);
 
     res.status(200).json({
       loading: false,
-      Message: result,
+      Message: "Added Recipe In Your Profile.",
     });
   } else {
     res.status(400).json({ Error: "User Not exiest!!" });

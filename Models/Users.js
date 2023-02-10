@@ -73,6 +73,30 @@ const UserSchema = new mongoose.Schema({
       },
     },
   ],
+  comments: [
+    {
+      name: {
+        type: String,
+        require: true,
+      },
+      email: {
+        type: String,
+        require: true,
+      },
+      message: {
+        type: String,
+        require: true,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+      image: {
+        type: String,
+        require: true,
+      },
+    },
+  ],
 });
 
 // Generating Token
