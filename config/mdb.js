@@ -4,10 +4,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 // Connect DB
+mongoose.set("strictQuery", false);
+
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => console.log("Mongodb is Connected".blue)
-)
-  .catch((err) => console.log("Connection Error".red,err));
+  .then(() => console.log("Mongodb is Connected".blue))
+  .catch((err) => console.log("Connection Error".red, err));
 
 module.exports = mongoose;
